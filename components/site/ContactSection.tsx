@@ -151,9 +151,24 @@ export default function ContactSection({ showSectionFooter = false }: { showSect
             / contact
           </p>
           <h2 className="text-5xl font-extrabold leading-[0.95] text-[var(--text)] md:text-[64px]" style={{ fontFamily: 'var(--font-heading)' }}>
-            Let&apos;s build
-            <br />
-            something<span className="text-[var(--accent)]">.</span>
+            <motion.span
+              className="block"
+              initial={{ opacity: 0, x: -80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            >
+              Let&apos;s build
+            </motion.span>
+            <motion.span
+              className="block"
+              initial={{ opacity: 0, x: 80 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              something<span className="text-[var(--accent)]">.</span>
+            </motion.span>
           </h2>
           <p className="mt-6 max-w-[480px] text-base leading-relaxed text-[var(--text-muted)]">
             I&apos;m currently open to full-time roles, internships, and interesting collaborations. Response time:

@@ -84,9 +84,24 @@ export default function SkillsSection() {
         <p className="mb-4 text-xs uppercase tracking-[0.2em] text-[var(--accent)]" style={{ fontFamily: 'var(--font-mono)' }}>
           / skills
         </p>
-        <h2 className="text-4xl font-extrabold leading-tight text-[var(--text)] md:text-[52px]" style={{ fontFamily: 'var(--font-heading)' }}>
-          What I work with<span className="text-[var(--accent)]">.</span>
-        </h2>
+        <div className="text-4xl font-extrabold leading-tight text-[var(--text)] md:text-[52px]" style={{ fontFamily: 'var(--font-heading)' }}>
+          <motion.h2
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            What I
+          </motion.h2>
+          <motion.h2
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            work with<span className="text-[var(--accent)]">.</span>
+          </motion.h2>
+        </div>
         <p className="mt-5 max-w-[500px] text-base leading-relaxed text-[var(--text-muted)]">
           Across AI/ML, backend, frontend, and deployment - these are the tools I reach for.
         </p>

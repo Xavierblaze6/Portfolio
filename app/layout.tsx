@@ -5,6 +5,7 @@ import ScrollProgress from '@/components/site/ScrollProgress'
 import CursorSpotlight from '@/components/site/CursorSpotlight'
 import CustomCursor from '@/components/CustomCursor'
 import ScrollRestoration from '@/components/ScrollRestoration'
+import LoadingScreen from '@/components/LoadingScreen'
 import { XPProvider } from '@/context/XPContext'
 import XPBar from '@/components/XPBar'
 import ToastContainer from '@/components/ToastContainer'
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body suppressHydrationWarning className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
+        <LoadingScreen />
         <XPProvider>
           <ScrollRestoration />
           <XPBar />

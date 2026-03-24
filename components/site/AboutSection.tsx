@@ -88,28 +88,46 @@ export default function AboutSection({ showReadMore = true }: AboutSectionProps)
       }}
     >
       <div className="max-w-container">
-        <motion.p
-          variants={leftItem}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="mb-6 text-[12px] tracking-[0.22em] text-[var(--accent)]"
+        <motion.span
+          initial={{ clipPath: 'inset(0 100% 0 0)' }}
+          whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-6 block text-[12px] tracking-[0.22em] text-[var(--accent)]"
           style={{ fontFamily: 'JetBrains Mono, monospace' }}
         >
           / ABOUT
-        </motion.p>
+        </motion.span>
 
         <div className="mt-6 grid grid-cols-1 gap-16 lg:grid-cols-[55%_45%]">
           <motion.div
             variants={leftItem}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <motion.h2
-              variants={leftItem}
-              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            <h2
               className="text-[40px] font-extrabold leading-none text-[var(--text)] md:text-[64px]"
               style={{ fontFamily: 'Syne, DM Sans, sans-serif' }}
             >
-              Girish Manne
-            </motion.h2>
+              <motion.span
+                className="inline-block"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Girish
+              </motion.span>
+              <span className="inline-block w-3" aria-hidden="true" />
+              <motion.span
+                className="inline-block"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              >
+                Manne
+              </motion.span>
+            </h2>
 
             <motion.p
               variants={leftItem}

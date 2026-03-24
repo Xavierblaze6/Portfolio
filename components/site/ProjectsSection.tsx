@@ -139,11 +139,6 @@ const projects: Project[] = [
   },
 ]
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0 },
-}
-
 type ProjectsSectionProps = {
   showSectionLabel?: boolean
 }
@@ -166,13 +161,13 @@ function ProjectCard({ project, index, onClick }: { project: Project; index: num
       style={{ borderRadius: '20px', overflow: 'hidden' }}
     >
       <motion.article
-        variants={itemVariants}
-        initial="hidden"
-        whileInView="visible"
+        data-cursor="project"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{
-          duration: 0.6,
-          delay: 0.1 + index * 0.1,
+          duration: 0.7,
+          delay: index * 0.1,
           ease: [0.22, 1, 0.36, 1],
         }}
         className="group relative cursor-pointer overflow-hidden rounded-[20px] border border-[var(--border)] bg-[#111111] transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-[rgba(232,197,71,0.25)]"

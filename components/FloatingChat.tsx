@@ -52,6 +52,7 @@ export default function FloatingChat() {
 
       {/* Floating Avatar Button */}
       <motion.button
+        data-cursor="chat"
         onClick={() => setOpen(prev => !prev)}
         className="fixed bottom-6 right-6 z-[9990] w-14 h-14 rounded-full"
         style={{

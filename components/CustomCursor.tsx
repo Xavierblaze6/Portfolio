@@ -1,101 +1,113 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+
+type CursorState = 'default' | 'link' | 'project' | 'name' | 'chat'
+
+const CURSOR_LABELS: Record<CursorState, string> = {
+  default: '',
+  link: 'OPEN',
+  project: 'CASE STUDY',
+  name: '👾',
+  chat: 'CHAT',
+}
 
 export default function CustomCursor() {
-  const dotRef = useRef<HTMLDivElement>(null)
-  const ringRef = useRef<HTMLDivElement>(null)
-  const [isHovering, setIsHovering] = useState(false)
-  const [isClicking, setIsClicking] = useState(false)
-  const pos = useRef({ x: 0, y: 0 })
-  const ringPos = useRef({ x: 0, y: 0 })
-  const animFrame = useRef<number>()
+  const [pos, setPos] = useState({ x: -100, y: -100 })
+  const [state, setCursorState] = useState<CursorState>('default')
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return
 
     document.documentElement.style.cursor = 'none'
 
-    const moveDot = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY }
-      if (dotRef.current) {
-        dotRef.current.style.left = `${e.clientX}px`
-        dotRef.current.style.top = `${e.clientY}px`
-      }
-    }
-
-    const animateRing = () => {
-      ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.18
-      ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.18
-
-      if (ringRef.current) {
-        ringRef.current.style.left = `${ringPos.current.x}px`
-        ringRef.current.style.top = `${ringPos.current.y}px`
-      }
-
-      animFrame.current = requestAnimationFrame(animateRing)
+    const move = (e: MouseEvent) => {
+      setPos({ x: e.clientX, y: e.clientY })
+      if (!visible) setVisible(true)
     }
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (target.closest('a, button, [data-magnetic]')) {
-        setIsHovering(true)
+      const elementWithCursor = target.closest('[data-cursor]') as HTMLElement | null
+
+      if (elementWithCursor?.dataset.cursor) {
+        setCursorState(elementWithCursor.dataset.cursor as CursorState)
+        return
+      }
+
+      if (
+        target.closest('a') ||
+        target.closest('button') ||
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON'
+      ) {
+        setCursorState('link')
+      } else {
+        setCursorState('default')
       }
     }
 
-    const handleMouseOut = (e: MouseEvent) => {
-      const target = e.target as HTMLElement
-      if (target.closest('a, button, [data-magnetic]')) {
-        setIsHovering(false)
-      }
-    }
-
-    const handleMouseDown = () => setIsClicking(true)
-    const handleMouseUp = () => setIsClicking(false)
-
-    window.addEventListener('mousemove', moveDot)
+    window.addEventListener('mousemove', move)
     window.addEventListener('mouseover', handleMouseOver)
-    window.addEventListener('mouseout', handleMouseOut)
-    window.addEventListener('mousedown', handleMouseDown)
-    window.addEventListener('mouseup', handleMouseUp)
-    animFrame.current = requestAnimationFrame(animateRing)
 
     return () => {
       document.documentElement.style.cursor = ''
-      window.removeEventListener('mousemove', moveDot)
+      window.removeEventListener('mousemove', move)
       window.removeEventListener('mouseover', handleMouseOver)
-      window.removeEventListener('mouseout', handleMouseOut)
-      window.removeEventListener('mousedown', handleMouseDown)
-      window.removeEventListener('mouseup', handleMouseUp)
-      if (animFrame.current) cancelAnimationFrame(animFrame.current)
     }
-  }, [])
+  }, [visible])
+
+  const isExpanded = state !== 'default'
+  const label = CURSOR_LABELS[state]
 
   return (
     <>
-      <div
-        ref={dotRef}
-        className="fixed pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2"
+      <motion.div
+        className="cursor-ring fixed pointer-events-none z-[99998] flex items-center justify-center"
         style={{
-          width: isClicking ? '6px' : '8px',
-          height: isClicking ? '6px' : '8px',
+          left: pos.x,
+          top: pos.y,
+          translateX: '-50%',
+          translateY: '-50%',
+        }}
+        animate={{
+          width: isExpanded ? (label.length > 2 ? 90 : 56) : 20,
+          height: isExpanded ? (label.length > 2 ? 90 : 56) : 20,
+          opacity: visible ? 1 : 0,
+          background: isExpanded ? 'rgba(232,197,71,0.15)' : 'transparent',
+          borderColor: '#e8c547',
+          borderWidth: isExpanded ? 1.5 : 1,
+          borderRadius: '9999px',
+          backdropFilter: isExpanded ? 'blur(4px)' : 'none',
+        }}
+        transition={{ type: 'spring', damping: 25, stiffness: 350, mass: 0.5 }}
+      >
+        {isExpanded && label ? (
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="select-none text-center font-mono text-[10px] font-bold leading-none tracking-widest"
+            style={{ color: '#e8c547' }}
+          >
+            {label}
+          </motion.span>
+        ) : null}
+      </motion.div>
+
+      <motion.div
+        className="cursor-dot fixed pointer-events-none z-[99999] h-1.5 w-1.5 rounded-full"
+        style={{
+          left: pos.x,
+          top: pos.y,
+          translateX: '-50%',
+          translateY: '-50%',
           background: '#e8c547',
-          borderRadius: '50%',
-          transition: 'width 0.1s, height 0.1s',
-          mixBlendMode: 'difference',
+          boxShadow: '0 0 6px rgba(232,197,71,0.8)',
         }}
-      />
-      <div
-        ref={ringRef}
-        className="fixed pointer-events-none z-[9998] -translate-x-1/2 -translate-y-1/2"
-        style={{
-          width: isHovering ? '48px' : '32px',
-          height: isHovering ? '48px' : '32px',
-          border: `1.5px solid rgba(232, 197, 71, ${isHovering ? 0.8 : 0.4})`,
-          background: isHovering ? 'rgba(232, 197, 71, 0.06)' : 'transparent',
-          borderRadius: '50%',
-          transition: 'width 0.15s ease, height 0.15s ease, border-color 0.15s, background 0.15s',
-        }}
+        animate={{ opacity: visible ? 1 : 0 }}
+        transition={{ type: 'spring', damping: 30, stiffness: 500, mass: 0.2 }}
       />
     </>
   )

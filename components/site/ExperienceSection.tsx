@@ -132,10 +132,10 @@ export default function ExperienceSection() {
                 <motion.div
                   key={exp.id}
                   className="relative"
-                  initial={false}
+                  initial={{ opacity: 0, x: -40 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.15 }}
+                  transition={{ duration: 0.6, delay: index * 0.2, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <div
                     className="absolute -left-6 top-8 h-3 w-3 rounded-full"

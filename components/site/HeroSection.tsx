@@ -79,9 +79,10 @@ export default function HeroSection() {
             </motion.div>
 
             <motion.h1
-              initial={false}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.2, ease }}
+              data-cursor="name"
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.3, ease }}
               className={`glitch-wrapper text-[48px] font-extrabold leading-[0.95] text-[var(--text)] md:text-[64px] lg:text-[96px] ${glitching1 ? 'glitching' : ''}`}
               style={{ fontFamily: 'Syne, DM Sans, sans-serif', cursor: 'default' }}
               data-text="Girish"
@@ -95,9 +96,10 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.h1
-              initial={false}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.7, delay: 0.3, ease }}
+              data-cursor="name"
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.5, ease }}
               className={`glitch-wrapper text-[48px] font-extrabold leading-[0.95] text-[var(--text)] md:text-[64px] lg:text-[96px] ${glitching2 ? 'glitching' : ''}`}
               style={{ fontFamily: 'Syne, DM Sans, sans-serif', cursor: 'default' }}
               data-text="Manne."
@@ -120,17 +122,18 @@ export default function HeroSection() {
             </motion.h1>
 
             <motion.p
-              initial={false}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, x: -60 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.7, ease }}
               className="mt-4 text-[18px] text-[var(--text-muted)]"
             >
               AI/ML Engineer <span className="text-[var(--accent)]">·</span> Full Stack Developer
             </motion.p>
 
             <motion.p
-              initial={false}
+              initial={{ opacity: 0, x: -60 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.5, ease }}
+              transition={{ duration: 0.8, delay: 0.9, ease }}
               className="my-8 max-w-[620px] border-l-[3px] border-[var(--accent)] pl-5 text-[22px] italic text-[rgba(240,237,230,0.6)]"
               style={{ fontFamily: 'Syne, DM Sans, sans-serif' }}
             >
@@ -151,9 +154,9 @@ export default function HeroSection() {
             </motion.p>
 
             <motion.div
-              initial={false}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.7, ease }}
+              transition={{ duration: 0.8, delay: 1.1, ease }}
               className="flex flex-wrap gap-4"
             >
               <div className="-m-4 inline-block p-4">
@@ -188,6 +191,7 @@ export default function HeroSection() {
               className="mt-4"
             >
               <button
+                data-cursor="chat"
                 onClick={() => window.dispatchEvent(new CustomEvent('openFloatingChat'))}
                 className="font-mono text-[12px] transition-colors group"
                 style={{ color: '#444' }}
